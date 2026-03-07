@@ -4,7 +4,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+_connection = None
+
 def get_db_connection(with_db=True):
+    global _connection
+    
+    # Check if existing connection is still healthy
+    if _connection:
+        try:
+            _connection.ping(reconnect=True)
+            return _connection
+        except:
+            _connection = None
+
     try:
         config = {
             'host': os.getenv('DB_HOST', '127.0.0.1'),
@@ -12,7 +24,8 @@ def get_db_connection(with_db=True):
             'password': os.getenv('DB_PASSWORD', ''),
             'port': int(os.getenv('DB_PORT', 3306)),
             'charset': 'utf8mb4',
-            'cursorclass': pymysql.cursors.DictCursor if with_db else None
+            'cursorclass': pymysql.cursors.DictCursor if with_db else None,
+            'connect_timeout': 5
         }
         
         # Add SSL support for TiDB Cloud
@@ -23,8 +36,8 @@ def get_db_connection(with_db=True):
         if with_db:
             config['database'] = os.getenv('DB_NAME', 'fitness_db')
         
-        connection = pymysql.connect(**config)
-        return connection
+        _connection = pymysql.connect(**config)
+        return _connection
     except Exception as e:
         print(f"Error connecting to Database: {e}")
         return None
