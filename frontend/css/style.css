@@ -1,0 +1,55 @@
+/* Base Variables */
+:root {
+    --bg-light: #fafafa;
+    --bg-dark: #0a0a0a;
+    --primary-orange: #f97316;
+    --primary-hover: #ea580c;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-light);
+}
+
+html.dark body {
+    background-color: var(--bg-dark);
+}
+
+/* Micro Animations - Requested by User */
+.hover-scale {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+button.hover-scale:hover {
+    transform: scale(1.05); /* User exactly requested this scale */
+}
+
+/* Smooth Scrolling for Hero Section */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading Skeleton - Requested by User */
+.skeleton {
+    background: #e2e8f0;
+    background-image: linear-gradient(90deg, #e2e8f0 0px, #f8fafc 40px, #e2e8f0 80px);
+    background-size: 200vw 100%;
+    animation: skeleton-loading 1.5s infinite linear;
+    border-radius: 4px;
+}
+
+html.dark .skeleton {
+    background: #1e293b;
+    background-image: linear-gradient(90deg, #1e293b 0px, #334155 40px, #1e293b 80px);
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}

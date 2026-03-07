@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalancedBody AI | Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { primary: { 50: '#f7fee7', 100: '#ecfccb', 500: '#84cc16', 600: '#65a30d', 900: '#365314' }, secondary: { 500: '#3b82f6' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-background dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200">
+
+    <div id="app-shell" class="w-full h-full">
+        <div class="mb-8 relative">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Hello, <span id="display-name" class="skeleton text-transparent rounded">User Name</span> 👋</h1>
+                    <p id="today-date-display" class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium"></p>
+                </div>
+                <div class="flex items-center gap-2 bg-primary-100 dark:bg-primary-900/30 px-4 py-2 rounded-full border border-primary-200 dark:border-primary-800">
+                    <span class="text-xl">🔥</span>
+                    <span id="active-days-count" class="text-sm font-bold text-primary-700 dark:text-primary-400">0 Day Streak</span>
+                </div>
+            </div>
+
+            <div class="bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg p-4 flex items-start gap-4 mb-4">
+                <div class="mt-1 bg-primary-100 dark:bg-primary-900/50 p-2 rounded-full text-primary-600 dark:text-primary-400">
+                    <span class="text-xl">💪</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-primary-900 dark:text-primary-100">Ready for today?</h3>
+                    <p class="text-sm text-primary-700 dark:text-primary-300">Consistency is key. Let's make every calorie count!</p>
+                </div>
+            </div>
+
+            <div class="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 flex items-start gap-4">
+                <i data-feather="bell" class="text-orange-500 mt-1"></i>
+                <div class="flex-1">
+                    <p class="text-sm text-orange-800 dark:text-orange-200 font-medium">Daily Goal Checklist</p>
+                </div>
+                <a href="workout.html" class="text-sm font-bold text-orange-600 dark:text-orange-400 hover:text-orange-700">Go to Workout</a>
+            </div>
+        </div>
+
+        <!-- Metric Cards Grid -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            
+            <!-- BMI -->
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-xl shadow-sm hover-scale">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-lg"><i data-feather="activity" class="w-4 h-4"></i></div>
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">BMI</span>
+                </div>
+                <h3 id="metric-bmi" class="text-2xl font-bold text-gray-900 dark:text-white skeleton w-20 h-8 rounded mb-1"></h3>
+                <p id="metric-bmi-label" class="text-xs font-medium text-blue-500 skeleton w-24 h-4 rounded"></p>
+            </div>
+
+            <!-- Calories -->
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-xl shadow-sm hover-scale">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="p-2 bg-primary-50 dark:bg-primary-900/20 text-primary-500 rounded-lg"><i data-feather="zap" class="w-4 h-4"></i></div>
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Daily Calories</span>
+                </div>
+                <div class="flex items-baseline gap-1 mb-1">
+                    <h3 id="metric-cal" class="text-2xl font-bold text-gray-900 dark:text-white skeleton w-20 h-8 rounded"></h3>
+                    <span class="text-sm text-gray-500 hidden" id="cal-unit">kcal</span>
+                </div>
+                <p class="text-xs font-medium text-gray-400">Target allocation</p>
+            </div>
+
+            <!-- Workout Time -->
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-xl shadow-sm hover-scale">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-500 rounded-lg"><i data-feather="clock" class="w-4 h-4"></i></div>
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Workout Today</span>
+                </div>
+                <div class="flex items-baseline gap-1 mb-1">
+                    <h3 id="metric-time" class="text-2xl font-bold text-gray-900 dark:text-white">45</h3>
+                    <span class="text-sm text-gray-500">min</span>
+                </div>
+                <p class="text-xs font-medium text-purple-500">Recommended</p>
+            </div>
+
+            <!-- Goal -->
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-xl shadow-sm hover-scale">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="p-2 bg-orange-50 dark:bg-orange-900/20 text-orange-500 rounded-lg"><i data-feather="target" class="w-4 h-4"></i></div>
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Goal</span>
+                </div>
+                <h3 id="metric-goal" class="text-lg font-bold text-gray-900 dark:text-white skeleton w-24 h-8 rounded mb-1"></h3>
+                <p class="text-xs font-medium text-orange-500">Current trajectory</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = getUserId();
+            if (!userId) { window.location.href = 'auth.html'; return; }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/dashboard?user_id=${userId}`);
+                if (res.status === 404) {
+                    const data = await res.json();
+                    if (data.error === "User not found") {
+                        alert("Session expired or user deleted. Please register again.");
+                        logout();
+                        return;
+                    }
+                }
+                if (!res.ok) throw new Error('Need onboarding');
+                const data = await res.json();
+                
+                const pName = document.getElementById('display-name');
+                pName.classList.remove('skeleton', 'text-transparent');
+                pName.textContent = data.name;
+
+                document.getElementById('today-date-display').textContent = data.today_date;
+                document.getElementById('active-days-count').textContent = `${data.active_days} Day Streak`;
+
+                const pBmi = document.getElementById('metric-bmi');
+                pBmi.classList.remove('skeleton', 'w-20', 'h-8');
+                pBmi.textContent = data.metrics.bmi;
+                
+                const pBmiLabel = document.getElementById('metric-bmi-label');
+                pBmiLabel.classList.remove('skeleton', 'w-24', 'h-4');
+                pBmiLabel.textContent = (data.metrics.bmi > 25) ? 'Overweight' : (data.metrics.bmi < 18.5) ? 'Underweight' : 'Healthy';
+                pBmiLabel.className = (data.metrics.bmi > 25 || data.metrics.bmi < 18.5) ? 'text-xs font-medium text-orange-500' : 'text-xs font-medium text-primary-500';
+
+                const pCal = document.getElementById('metric-cal');
+                pCal.classList.remove('skeleton', 'w-20', 'h-8');
+                pCal.textContent = data.metrics.tdee;
+                document.getElementById('cal-unit').classList.remove('hidden');
+
+                const pGoal = document.getElementById('metric-goal');
+                pGoal.classList.remove('skeleton', 'w-24', 'h-8');
+                const goalMap = { 'loss': 'Weight Loss', 'gain': 'Build Muscle', 'maintain': 'Maintenance' };
+                try {
+                    const profReq = await fetch(`${API_BASE_URL}/user/profile?user_id=${userId}`);
+                    if (profReq.ok) {
+                        const prof = await profReq.json();
+                        pGoal.textContent = goalMap[prof.goal] || prof.goal;
+                    }
+                } catch(e) { pGoal.textContent = "Optimization"; }
+
+            } catch (err) {
+                if (err.message === 'Need onboarding' || err.message.includes('Profile not configured')) {
+                    window.location.href = 'profile.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+// In local dev, always call Flask directly at port 5001.
+// On Vercel (production), use relative /api since both are on the same domain.
+const IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const API_BASE_URL = IS_LOCAL ? 'http://127.0.0.1:5001/api' : '/api';
+
+function initTheme() {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+}
+
+function toggleTheme() {
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+    } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+    }
+}
+
+function getUserId() { return localStorage.getItem('user_id'); }
+function getUserName() { return localStorage.getItem('user_name'); }
+function setSession(userId, name) {
+    localStorage.setItem('user_id', userId);
+    localStorage.setItem('user_name', name);
+}
+function logout() {
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_name');
+    window.location.href = 'index.html';
+}
+
+// Inject App Shell (Sidebar & Mobile Bottom Nav) into authenticated pages
+function renderAppShell(activePath) {
+    const shellContainer = document.getElementById('app-shell');
+    if (!shellContainer) return;
+
+    const navItems = [
+        { path: 'dashboard.html', icon: 'grid', label: 'Dashboard' },
+        { path: 'diet.html', icon: 'coffee', label: 'Diet Plan' },
+        { path: 'workout.html', icon: 'activity', label: 'Workout Plan' },
+        { path: 'progress.html', icon: 'trending-up', label: 'Progress' },
+        { path: 'profile.html', icon: 'user', label: 'Profile' }
+    ];
+
+    let sidebarLinks = '';
+    let bottomNavLinks = '';
+
+    navItems.forEach(item => {
+        const isActive = activePath === item.path;
+        const activeClassSidebar = isActive ? 'bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800';
+        const activeClassBottom = isActive ? 'text-primary-600 dark:text-primary-400' : 'text-gray-500 dark:text-gray-400';
+
+        sidebarLinks += `
+            <a href="${item.path}" class="flex items-center px-4 py-3 mb-2 rounded-lg transition-colors ${activeClassSidebar}">
+                <i data-feather="${item.icon}" class="w-5 h-5 mr-3"></i>
+                <span class="font-medium">${item.label}</span>
+            </a>
+        `;
+
+        bottomNavLinks += `
+            <a href="${item.path}" class="flex flex-col items-center justify-center w-full py-2 ${activeClassBottom}">
+                <i data-feather="${item.icon}" class="w-5 h-5 mb-1"></i>
+                <span class="text-[10px] uppercase font-bold tracking-wider">${item.label}</span>
+            </a>
+        `;
+    });
+
+    const shellHTML = `
+        <div class="flex h-screen bg-background dark:bg-gray-900 transition-colors duration-200">
+            <!-- Desktop Sidebar -->
+            <aside class="hidden md:flex flex-col w-64 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+                <div class="p-6 flex items-center gap-2">
+                    <i data-feather="activity" class="text-primary-500"></i>
+                    <span class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">BalancedBody AI</span>
+                </div>
+                <nav class="flex-1 px-4 py-4 space-y-1">
+                    ${sidebarLinks}
+                </nav>
+                <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between px-4 py-2 mb-2">
+                        <span class="text-sm font-medium text-gray-500">Theme</span>
+                        <button onclick="toggleTheme()" class="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                            <i data-feather="moon" class="w-4 h-4 text-gray-600 hidden dark:block"></i>
+                            <i data-feather="sun" class="w-4 h-4 text-gray-400 block dark:hidden"></i>
+                        </button>
+                    </div>
+                    <button onclick="logout()" class="w-full flex items-center px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors">
+                        <i data-feather="log-out" class="w-5 h-5 mr-3"></i>
+                        <span class="font-medium">Logout</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content Container -->
+            <div class="flex-1 flex flex-col min-w-0 overflow-y-auto pb-16 md:pb-0">
+                
+                <!-- Mobile Topbar -->
+                <header class="md:hidden flex items-center justify-between px-4 py-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-20">
+                    <div class="flex items-center gap-2">
+                        <i data-feather="activity" class="text-primary-500 h-5 w-5"></i>
+                        <span class="text-lg font-bold text-gray-900 dark:text-white">BalancedBody AI</span>
+                    </div>
+                    <button onclick="toggleTheme()" class="p-2 text-gray-500">
+                        <i data-feather="moon" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-feather="sun" class="w-5 h-5 block dark:hidden"></i>
+                    </button>
+                </header>
+
+                <main class="flex-1 p-4 sm:p-6 lg:p-8" id="main-view">
+                    <!-- Page content injected below -->
+                </main>
+            </div>
+
+            <!-- Mobile Bottom Nav -->
+            <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-50 flex justify-around items-center h-16 safe-area-pb">
+                ${bottomNavLinks}
+            </nav>
+        </div>
+    `;
+
+    // Wrap the existing body content inside the main-view area
+    const existingContent = shellContainer.innerHTML;
+    shellContainer.innerHTML = shellHTML;
+    document.getElementById('main-view').innerHTML = existingContent;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+
+    // Auto-render shell if container exists
+    const shellContainer = document.getElementById('app-shell');
+    if (shellContainer) {
+        const path = window.location.pathname.split('/').pop() || 'index.html';
+        renderAppShell(path);
+    }
+
+    if (typeof feather !== 'undefined') feather.replace();
+});
