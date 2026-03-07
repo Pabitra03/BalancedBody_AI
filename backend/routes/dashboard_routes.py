@@ -69,6 +69,7 @@ def get_dashboard():
         workout_plan = get_workout_plan_details(workout_plan_id)
         weekly_plan = get_weekly_plan(diet_plan_id, workout_plan_id, user.get('diet_type', 'non_vegetarian'))
         
+        # Hydration logic
         hydration = round((weight_kg * 0.033) * 1000) # ml
         
         response_data = {

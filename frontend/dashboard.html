@@ -100,6 +100,78 @@
                 <p class="text-xs font-medium text-orange-500">Current trajectory</p>
             </div>
         </div>
+
+        <!-- Today's Diet & Workout Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <!-- Diet Recommendation -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <span class="p-2 bg-primary-100 dark:bg-primary-900/40 text-primary-600 rounded-lg"><i data-feather="coffee" class="w-5 h-5"></i></span>
+                        Today's Diet Recommendation
+                    </h2>
+                    <span id="diet-plan-name" class="text-sm font-bold text-primary-600 bg-primary-50 dark:bg-primary-900/20 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-800">Plan Name</span>
+                </div>
+
+                <!-- Main Featured Meal -->
+                <div class="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+                    <img id="featured-meal-img" src="" alt="Featured Meal" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-xs font-bold text-primary-400 uppercase tracking-wider mb-1">Top Recommendation</span>
+                        <h3 id="featured-meal-title" class="text-2xl font-bold text-white mb-2"></h3>
+                        <p id="featured-meal-desc" class="text-sm text-gray-300 line-clamp-2"></p>
+                    </div>
+                </div>
+
+                <!-- Meal Breakdown Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Breakfast -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i data-feather="sun" class="w-12 h-12 text-blue-500"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Sunrise Fuel</span>
+                        <h4 id="meal-breakfast" class="font-bold text-gray-900 dark:text-white text-sm mb-1"></h4>
+                        <p class="text-[10px] text-gray-500 line-clamp-2">High energy intake to fuel your morning activity.</p>
+                    </div>
+                    <!-- Lunch -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i data-feather="cloud" class="w-12 h-12 text-orange-500"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-orange-500 uppercase tracking-widest block mb-1">Peak Performance</span>
+                        <h4 id="meal-lunch" class="font-bold text-gray-900 dark:text-white text-sm mb-1"></h4>
+                        <p class="text-[10px] text-gray-500 line-clamp-2">Balanced macros for sustained cognitive and physical focus.</p>
+                    </div>
+                    <!-- Dinner -->
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i data-feather="moon" class="w-12 h-12 text-purple-500"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-purple-500 uppercase tracking-widest block mb-1">Night Recovery</span>
+                        <h4 id="meal-dinner" class="font-bold text-gray-900 dark:text-white text-sm mb-1"></h4>
+                        <p class="text-[10px] text-gray-500 line-clamp-2">Low carb and lean protein for optimal nightly synthesis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Workout Suggestion -->
+            <div class="space-y-6">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+                    <span class="p-2 bg-orange-100 dark:bg-orange-900/40 text-orange-600 rounded-lg"><i data-feather="layers" class="w-5 h-5"></i></span>
+                    Daily Grind
+                </h2>
+                <div class="bg-gradient-to-br from-orange-500 to-red-600 p-6 rounded-2xl text-white shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+                    <span class="text-xs font-bold text-white/80 uppercase tracking-widest block mb-2">Today's Protocol</span>
+                    <h3 id="workout-name" class="text-2xl font-bold mb-2"></h3>
+                    <p id="workout-routine" class="text-orange-100 text-sm mb-6 leading-relaxed"></p>
+                    <a href="workout.html" class="inline-flex items-center gap-2 bg-white text-orange-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-100 transition-colors">
+                        Start Workout <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="js/app.js?v=2"></script>
@@ -145,13 +217,36 @@
                 const pGoal = document.getElementById('metric-goal');
                 pGoal.classList.remove('skeleton', 'w-24', 'h-8');
                 const goalMap = { 'loss': 'Weight Loss', 'gain': 'Build Muscle', 'maintain': 'Maintenance' };
+                let dietType = 'non_vegetarian';
                 try {
                     const profReq = await fetch(`${API_BASE_URL}/user/profile?user_id=${userId}`);
                     if (profReq.ok) {
                         const prof = await profReq.json();
                         pGoal.textContent = goalMap[prof.goal] || prof.goal;
+                        dietType = prof.diet_type || 'non_vegetarian';
                     }
                 } catch(e) { pGoal.textContent = "Optimization"; }
+
+                // Populate Diet Plan
+                document.getElementById('diet-plan-name').textContent = data.diet_plan.name;
+                const today = new Date().toLocaleDateString('en-US', { weekday: 'lowercase' });
+                // We use 'monday' or 'tuesday' currently in plans.py, let's fall back to monday if anything else
+                const dayKey = (today === 'tuesday') ? 'tuesday' : 'monday';
+                const meals = data.diet_plan[dayKey];
+                
+                document.getElementById('featured-meal-title').textContent = meals.lunch.item;
+                document.getElementById('featured-meal-desc').textContent = meals.lunch.details;
+                document.getElementById('featured-meal-img').src = meals.lunch.image;
+                
+                document.getElementById('meal-breakfast').textContent = meals.breakfast.item;
+                document.getElementById('meal-lunch').textContent = meals.lunch.item;
+                document.getElementById('meal-dinner').textContent = meals.dinner.item;
+
+                // Populate Workout
+                document.getElementById('workout-name').textContent = data.workout_plan.name;
+                document.getElementById('workout-routine').textContent = data.workout_plan[dayKey] || "Light Activity";
+
+                feather.replace();
 
             } catch (err) {
                 if (err.message === 'Need onboarding' || err.message.includes('Profile not configured')) {
