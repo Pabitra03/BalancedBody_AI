@@ -42,7 +42,7 @@ def handle_exception(e):
 
 @app.route('/', methods=['GET'])
 def home():
-    return "Fitness AI Backend is running!"
+    return "BalancedBody AI Backend is running!"
 
 if __name__ == '__main__':
     # Port 5001 used because macOS reserves 5000 for AirPlay Receiver
