@@ -105,17 +105,22 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <!-- Diet Recommendation -->
             <div class="lg:col-span-2 space-y-6">
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         <span class="p-2 bg-primary-100 dark:bg-primary-900/40 text-primary-600 rounded-lg"><i data-feather="coffee" class="w-5 h-5"></i></span>
                         Today's Diet Recommendation
                     </h2>
-                    <span id="diet-plan-name" class="text-sm font-bold text-primary-600 bg-primary-50 dark:bg-primary-900/20 px-3 py-1 rounded-full border border-primary-200 dark:border-primary-800">Plan Name</span>
+                    <span id="diet-plan-name" class="text-[10px] sm:text-xs font-bold text-primary-600 bg-primary-50 dark:bg-primary-900/20 px-3 py-1.5 rounded-full border border-primary-200 dark:border-primary-800 self-start sm:self-auto max-w-[150px] sm:max-w-none truncate sm:whitespace-normal text-center">Plan Name</span>
                 </div>
 
                 <!-- Main Featured Meal -->
-                <div class="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
-                    <img id="featured-meal-img" src="" alt="Featured Meal" class="w-full h-48 object-cover">
+                <div class="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-md">
+                    <div class="aspect-video sm:h-64 h-48 w-full bg-gray-100 dark:bg-gray-900 relative">
+                        <img id="featured-meal-img" src="" alt="Featured Meal" class="w-full h-full object-cover opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0')">
+                        <div id="img-placeholder" class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-600">
+                             <i data-feather="image" class="w-8 h-8"></i>
+                        </div>
+                    </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
                         <span class="text-xs font-bold text-primary-400 uppercase tracking-wider mb-1">Top Recommendation</span>
                         <h3 id="featured-meal-title" class="text-2xl font-bold text-white mb-2"></h3>
@@ -236,7 +241,9 @@
                 
                 document.getElementById('featured-meal-title').textContent = meals.lunch.item;
                 document.getElementById('featured-meal-desc').textContent = meals.lunch.details;
-                document.getElementById('featured-meal-img').src = meals.lunch.image;
+                
+                const mealImg = document.getElementById('featured-meal-img');
+                mealImg.src = meals.lunch.image.startsWith('/') ? meals.lunch.image : '/' + meals.lunch.image;
                 
                 document.getElementById('meal-breakfast').textContent = meals.breakfast.item;
                 document.getElementById('meal-lunch').textContent = meals.lunch.item;

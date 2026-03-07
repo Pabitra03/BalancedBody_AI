@@ -1,6 +1,6 @@
 def get_diet_plan_details(plan_id, diet_type='non_vegetarian'):
     is_veg = diet_type == 'vegetarian'
-    img_path = "assets/img/"
+    img_path = "/assets/img/"
     
     plans = {
         1: {
