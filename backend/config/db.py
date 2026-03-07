@@ -12,6 +12,13 @@ def get_db_connection(with_db=True):
             'password': os.getenv('DB_PASSWORD', ''),
             'port': int(os.getenv('DB_PORT', 3306))
         }
+        
+        # Add SSL/TLS support (Required for TiDB Cloud)
+        ssl_ca = os.getenv('DB_SSL_CA')
+        if ssl_ca:
+            config['ssl_ca'] = ssl_ca
+            config['ssl_verify_cert'] = True
+
         if with_db:
             config['database'] = os.getenv('DB_NAME', 'fitness_db')
         
