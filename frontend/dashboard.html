@@ -228,11 +228,11 @@
                 } catch(e) { pGoal.textContent = "Optimization"; }
 
                 // Populate Diet Plan
-                document.getElementById('diet-plan-name').textContent = data.diet_plan.name;
+                document.getElementById('diet-plan-name').textContent = data.diet.name;
                 const today = new Date().toLocaleDateString('en-US', { weekday: 'lowercase' });
                 // We use 'monday' or 'tuesday' currently in plans.py, let's fall back to monday if anything else
                 const dayKey = (today === 'tuesday') ? 'tuesday' : 'monday';
-                const meals = data.diet_plan[dayKey];
+                const meals = data.diet[dayKey];
                 
                 document.getElementById('featured-meal-title').textContent = meals.lunch.item;
                 document.getElementById('featured-meal-desc').textContent = meals.lunch.details;
@@ -243,8 +243,8 @@
                 document.getElementById('meal-dinner').textContent = meals.dinner.item;
 
                 // Populate Workout
-                document.getElementById('workout-name').textContent = data.workout_plan.name;
-                document.getElementById('workout-routine').textContent = data.workout_plan[dayKey] || "Light Activity";
+                document.getElementById('workout-name').textContent = data.workout.name;
+                document.getElementById('workout-routine').textContent = data.workout[dayKey] || "Light Activity";
 
                 feather.replace();
 
