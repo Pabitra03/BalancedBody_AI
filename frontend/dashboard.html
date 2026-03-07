@@ -116,7 +116,10 @@
                 <!-- Main Featured Meal -->
                 <div class="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-md">
                     <div class="aspect-video sm:h-64 h-48 w-full bg-gray-100 dark:bg-gray-900 relative">
-                        <img id="featured-meal-img" src="" alt="Featured Meal" class="w-full h-full object-cover opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0')">
+                        <img id="featured-meal-img" src="" alt="Featured Meal" 
+                             class="w-full h-full object-cover opacity-0 transition-opacity duration-500 z-10 relative" 
+                             onload="this.classList.remove('opacity-0'); document.getElementById('img-placeholder').classList.add('hidden')"
+                             onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'; this.classList.remove('opacity-0'); document.getElementById('img-placeholder').classList.add('hidden')">
                         <div id="img-placeholder" class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-600">
                              <i data-feather="image" class="w-8 h-8"></i>
                         </div>
@@ -244,7 +247,9 @@
                 
                 const mealImg = document.getElementById('featured-meal-img');
                 const lunchImg = (meals.lunch && meals.lunch.image) ? meals.lunch.image : '/assets/img/veg_main.png';
-                mealImg.src = lunchImg.startsWith('/') ? lunchImg : '/' + lunchImg;
+                // Add cache busting
+                const finalImgPath = lunchImg.startsWith('/') ? lunchImg : '/' + lunchImg;
+                mealImg.src = finalImgPath + '?v=' + new Date().getTime();
                 
                 document.getElementById('meal-breakfast').textContent = meals.breakfast.item;
                 document.getElementById('meal-lunch').textContent = meals.lunch.item;

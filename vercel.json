@@ -20,10 +20,6 @@
       "dest": "/frontend/index.html"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/frontend/assets/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }

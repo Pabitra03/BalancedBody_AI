@@ -62,9 +62,9 @@ function renderAppShell(activePath) {
         `;
 
         bottomNavLinks += `
-            <a href="${item.path}" class="flex flex-col items-center justify-center w-full py-2 ${activeClassBottom}">
-                <i data-feather="${item.icon}" class="w-5 h-5 mb-1"></i>
-                <span class="text-[10px] uppercase font-bold tracking-wider">${item.label}</span>
+            <a href="${item.path}" class="flex flex-col items-center justify-center w-full py-1 ${activeClassBottom}">
+                <i data-feather="${item.icon}" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-[8px] sm:text-[10px] uppercase font-black tracking-tighter sm:tracking-wider text-center px-1 leading-none">${item.label}</span>
             </a>
         `;
     });
