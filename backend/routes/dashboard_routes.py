@@ -65,9 +65,9 @@ def get_dashboard():
             goal_str=user['goal']
         )
                  
-        diet_plan = get_diet_plan_details(diet_plan_id)
+        diet_plan = get_diet_plan_details(diet_plan_id, user.get('diet_type', 'non_vegetarian'))
         workout_plan = get_workout_plan_details(workout_plan_id)
-        weekly_plan = get_weekly_plan(diet_plan_id, workout_plan_id)
+        weekly_plan = get_weekly_plan(diet_plan_id, workout_plan_id, user.get('diet_type', 'non_vegetarian'))
         
         hydration = round((weight_kg * 0.033) * 1000) # ml
         

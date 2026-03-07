@@ -84,6 +84,7 @@ def init_db():
         height FLOAT NOT NULL,
         activity_level VARCHAR(50) NOT NULL,
         goal VARCHAR(50) NOT NULL,
+        diet_type VARCHAR(20) DEFAULT 'non_vegetarian',
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )
     """)

@@ -1,26 +1,51 @@
-def get_diet_plan_details(plan_id):
+def get_diet_plan_details(plan_id, diet_type='non_vegetarian'):
+    is_veg = diet_type == 'vegetarian'
+    
     plans = {
         1: {
             "name": "Fat Loss & Metabolic Reset",
             "desc": "High thermic effect, low carb diet designed for sustainable weight loss.",
             "macros": {"protein": 40, "carbs": 25, "fats": 35},
-            "monday": {"breakfast": "Oats + Banana", "lunch": "Brown Rice + Dal + Veg", "dinner": "Grilled Chicken/Paneer + Salad"},
-            "tuesday": {"breakfast": "Eggs/Paneer + Toast", "lunch": "Chapati + Vegetable Curry", "dinner": "Rice + Fish/Tofu"}
+            "monday": {
+                "breakfast": "Oats + Banana", 
+                "lunch": "Brown Rice + Dal + Veg", 
+                "dinner": ("Grilled Paneer + Salad" if is_veg else "Grilled Chicken + Salad")
+            },
+            "tuesday": {
+                "breakfast": ("Paneer Scramble + Toast" if is_veg else "Egg Scramble + Toast"), 
+                "lunch": "Chapati + Vegetable Curry", 
+                "dinner": ("Rice + Tofu/Soya" if is_veg else "Rice + Fish")
+            }
         },
         2: {
             "name": "Balanced Maintenance",
             "desc": "Optimal balance of macronutrients for maintaining weight and providing sustained energy.",
             "macros": {"protein": 30, "carbs": 40, "fats": 30},
-            "monday": {"breakfast": "Eggs/Paneer + Toast", "lunch": "Chapati + Vegetable Curry", "dinner": "Rice + Fish/Tofu"},
-            "tuesday": {"breakfast": "Smoothie + Nuts", "lunch": "Brown Rice + Chicken/Paneer", "dinner": "Vegetable Soup + Salad"}
-
+            "monday": {
+                "breakfast": ("Paneer Paratha" if is_veg else "Eggs + Toast"), 
+                "lunch": "Chapati + Vegetable Curry", 
+                "dinner": ("Rice + Tofu/Paneer" if is_veg else "Rice + Fish/Chicken")
+            },
+            "tuesday": {
+                "breakfast": "Smoothie + Nuts", 
+                "lunch": ("Brown Rice + Paneer" if is_veg else "Brown Rice + Chicken"), 
+                "dinner": "Vegetable Soup + Salad"
+            }
         },
         3: {
             "name": "Muscle Building & Strength",
             "desc": "Caloric surplus with high protein and clean carbs to fuel muscle hypertrophy.",
             "macros": {"protein": 35, "carbs": 45, "fats": 20},
-            "monday": {"breakfast": "Smoothie + Nuts", "lunch": "Brown Rice + Chicken/Paneer", "dinner": "Vegetable Soup + Salad"},
-            "tuesday": {"breakfast": "Oats + Apple", "lunch": "Chapati + Dal + Veg", "dinner": "Grilled Paneer/Chicken"}
+            "monday": {
+                "breakfast": "Smoothie + Nuts", 
+                "lunch": ("Brown Rice + Paneer" if is_veg else "Brown Rice + Chicken"), 
+                "dinner": "Vegetable Soup + Salad"
+            },
+            "tuesday": {
+                "breakfast": "Oats + Apple", 
+                "lunch": "Chapati + Dal + Veg", 
+                "dinner": ("Grilled Paneer" if is_veg else "Grilled Chicken")
+            }
         }
     }
     return plans.get(plan_id, plans[2])
@@ -44,8 +69,8 @@ def get_workout_plan_details(plan_id):
         }
     }
     return plans.get(plan_id, plans[2])
-def get_weekly_plan(diet_id, workout_id):
-    diet_details = get_diet_plan_details(diet_id)
+def get_weekly_plan(diet_id, workout_id, diet_type='non_vegetarian'):
+    diet_details = get_diet_plan_details(diet_id, diet_type)
     workout_details = get_workout_plan_details(workout_id)
     
     days = ['monday', 'tuesday', 'monday', 'tuesday', 'monday', 'tuesday', 'monday'] # Simplified mock week

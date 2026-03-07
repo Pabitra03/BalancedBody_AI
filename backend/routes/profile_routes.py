@@ -42,14 +42,16 @@ def save_profile():
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO profiles (user_id, age, gender, weight, height, activity_level, goal)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO profiles (user_id, age, gender, weight, height, activity_level, goal, diet_type)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
             age=VALUES(age), gender=VALUES(gender), weight=VALUES(weight),
-            height=VALUES(height), activity_level=VALUES(activity_level), goal=VALUES(goal)
+            height=VALUES(height), activity_level=VALUES(activity_level), goal=VALUES(goal),
+            diet_type=VALUES(diet_type)
         """, (
             user_id, data.get('age'), data.get('gender'), data.get('weight'), 
-            data.get('height'), data.get('activity_level'), data.get('goal')
+            data.get('height'), data.get('activity_level'), data.get('goal'),
+            data.get('diet_type')
         ))
         conn.commit()
         return jsonify({"message": "Profile saved successfully"}), 200
