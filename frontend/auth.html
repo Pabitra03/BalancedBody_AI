@@ -61,12 +61,12 @@
                 <form id="form-login" class="space-y-5">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                        <input id="login-email" type="email" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
+                        <input id="login-email" type="email" required placeholder="name@example.com" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
                         <div class="relative">
-                            <input id="login-password" type="password" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
+                            <input id="login-password" type="password" required placeholder="••••••••" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
                             <button type="button" onclick="togglePassword('login-password')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
                                 <i data-feather="eye" class="w-5 h-5"></i>
                             </button>
@@ -81,16 +81,16 @@
                 <form id="form-register" class="space-y-5 hidden">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
-                        <input id="reg-name" type="text" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
+                        <input id="reg-name" type="text" required placeholder="John Doe" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email address</label>
-                        <input id="reg-email" type="email" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
+                        <input id="reg-email" type="email" required placeholder="name@example.com" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
                         <div class="relative">
-                            <input id="reg-password" type="password" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
+                            <input id="reg-password" type="password" required placeholder="Choose a strong password" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
                             <button type="button" onclick="togglePassword('reg-password')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
                                 <i data-feather="eye" class="w-5 h-5"></i>
                             </button>
