@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from config.db import get_db_connection
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 progress_routes = Blueprint('progress', __name__)
 
@@ -56,20 +56,44 @@ def get_progress_status(user_id):
     cursor = conn.cursor()
     
     try:
+        # Get today's status
         cursor.execute("SELECT diet_completed, workout_completed FROM user_progress WHERE user_id = %s AND entry_date = %s", (user_id, today))
         status = cursor.fetchone() or {"diet_completed": False, "workout_completed": False}
         
-        # Calculate days planned (mock logic: days since account creation or fixed 30)
+        # Get user info
         cursor.execute("SELECT created_at FROM users WHERE id = %s", (user_id,))
         user = cursor.fetchone()
+        
+        # Calculate days active
         days_active = 1
         if user and user['created_at']:
-            diff = datetime.now() - user['created_at']
+            # Adjust if created_at is string or datetime
+            created_dt = user['created_at']
+            if isinstance(created_dt, str):
+                created_dt = datetime.fromisoformat(created_dt.replace('Z', '+00:00'))
+            diff = datetime.now() - created_dt
             days_active = diff.days + 1
+
+        # Check yesterday's status
+        yesterday = (date.today() - timedelta(days=1)).isoformat()
+        cursor.execute("SELECT diet_completed, workout_completed FROM user_progress WHERE user_id = %s AND entry_date = %s", (user_id, yesterday))
+        yesterday_status = cursor.fetchone()
+        
+        # If no record exists for yesterday, we treat it as incomplete ONLY if they had the account then
+        yesterday_completed = False
+        if yesterday_status:
+            yesterday_completed = bool(yesterday_status['diet_completed']) and bool(yesterday_status['workout_completed'])
+        else:
+            # If no record, check if they were already a user yesterday
+            if user and user['created_at'] and user['created_at'] < datetime.combine(date.today(), datetime.min.time()):
+                yesterday_completed = False # Missed it
+            else:
+                yesterday_completed = True # New user, don't warn
             
         return jsonify({
             "diet_completed": bool(status['diet_completed']),
             "workout_completed": bool(status['workout_completed']),
+            "yesterday_completed": yesterday_completed,
             "days_planned": 30, # Target
             "days_active": days_active
         })

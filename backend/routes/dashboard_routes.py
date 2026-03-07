@@ -81,7 +81,8 @@ def get_dashboard():
                 "bmr": bmr,
                 "tdee": tdee,
                 "daily_calories": daily_calories,
-                "hydration_ml": hydration
+                "hydration_ml": hydration,
+                "goal": user['goal']
             },
             "diet": diet_plan,
             "workout": workout_plan,
