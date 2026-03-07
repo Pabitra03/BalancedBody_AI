@@ -104,10 +104,15 @@ function renderAppShell(activePath) {
                         <i data-feather="activity" class="text-primary-500 h-5 w-5"></i>
                         <span class="text-lg font-bold text-gray-900 dark:text-white">BalancedBody AI</span>
                     </div>
-                    <button onclick="toggleTheme()" class="p-2 text-gray-500">
-                        <i data-feather="moon" class="w-5 h-5 hidden dark:block"></i>
-                        <i data-feather="sun" class="w-5 h-5 block dark:hidden"></i>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleTheme()" class="p-2 text-gray-500">
+                            <i data-feather="moon" class="w-5 h-5 hidden dark:block"></i>
+                            <i data-feather="sun" class="w-5 h-5 block dark:hidden"></i>
+                        </button>
+                        <button onclick="logout()" class="p-2 text-red-500">
+                            <i data-feather="log-out" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </header>
 
                 <main class="flex-1 p-4 sm:p-6 lg:p-8" id="main-view">

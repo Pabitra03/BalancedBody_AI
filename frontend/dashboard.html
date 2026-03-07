@@ -243,7 +243,8 @@
                 document.getElementById('featured-meal-desc').textContent = meals.lunch.details;
                 
                 const mealImg = document.getElementById('featured-meal-img');
-                mealImg.src = meals.lunch.image.startsWith('/') ? meals.lunch.image : '/' + meals.lunch.image;
+                const lunchImg = (meals.lunch && meals.lunch.image) ? meals.lunch.image : '/assets/img/veg_main.png';
+                mealImg.src = lunchImg.startsWith('/') ? lunchImg : '/' + lunchImg;
                 
                 document.getElementById('meal-breakfast').textContent = meals.breakfast.item;
                 document.getElementById('meal-lunch').textContent = meals.lunch.item;
