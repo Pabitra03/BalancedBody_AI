@@ -151,15 +151,15 @@
                 return [
                     { type: 'Breakfast', icon: 'sun', content: dayPlan.breakfast, img: MEAL_IMAGES.Breakfast },
                     { type: 'Lunch', icon: 'cpu', content: dayPlan.lunch, img: MEAL_IMAGES.Lunch },
-                    { type: 'Dinner', icon: 'moon', content: dayPlan.dinner, img: MEAL_IMAGES.Dinner },
-                    { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[0], img: MEAL_IMAGES.Snacks }
+                    { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[0], img: MEAL_IMAGES.Snacks },
+                    { type: 'Dinner', icon: 'moon', content: dayPlan.dinner, img: MEAL_IMAGES.Dinner }
                 ];
             }
             return [
                 { type: 'Breakfast', icon: 'sun', content: MEAL_POOL.Breakfast[idx], img: MEAL_IMAGES.Breakfast },
                 { type: 'Lunch', icon: 'cpu', content: MEAL_POOL.Lunch[idx], img: MEAL_IMAGES.Lunch },
-                { type: 'Dinner', icon: 'moon', content: MEAL_POOL.Dinner[idx], img: MEAL_IMAGES.Dinner },
-                { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[idx], img: MEAL_IMAGES.Snacks }
+                { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[idx], img: MEAL_IMAGES.Snacks },
+                { type: 'Dinner', icon: 'moon', content: MEAL_POOL.Dinner[idx], img: MEAL_IMAGES.Dinner }
             ];
         }
 
@@ -171,8 +171,8 @@
             const meals = useVariant ? getVariantMeals(plan) : [
                 { type: 'Breakfast', icon: 'sun', content: getMealName(plan.breakfast), img: getMealImg(plan.breakfast, 'Breakfast') },
                 { type: 'Lunch', icon: 'cpu', content: getMealName(plan.lunch), img: getMealImg(plan.lunch, 'Lunch') },
-                { type: 'Dinner', icon: 'moon', content: getMealName(plan.dinner), img: getMealImg(plan.dinner, 'Dinner') },
-                { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[0], img: MEAL_IMAGES.Snacks }
+                { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[0], img: MEAL_IMAGES.Snacks },
+                { type: 'Dinner', icon: 'moon', content: getMealName(plan.dinner), img: getMealImg(plan.dinner, 'Dinner') }
             ];
             const container = document.getElementById('meals-container');
             container.innerHTML = '';

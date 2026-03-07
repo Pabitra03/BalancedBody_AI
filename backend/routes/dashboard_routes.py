@@ -93,4 +93,3 @@ def get_dashboard():
         return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
-        conn.close()

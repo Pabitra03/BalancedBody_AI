@@ -9,12 +9,16 @@ _connection = None
 def get_db_connection(with_db=True):
     global _connection
     
-    # Check if existing connection is still healthy
+    # Try to reuse the global connection if it's healthy
     if _connection:
         try:
             _connection.ping(reconnect=True)
             return _connection
-        except:
+        except Exception:
+            try:
+                _connection.close()
+            except:
+                pass
             _connection = None
 
     try:
@@ -25,10 +29,12 @@ def get_db_connection(with_db=True):
             'port': int(os.getenv('DB_PORT', 3306)),
             'charset': 'utf8mb4',
             'cursorclass': pymysql.cursors.DictCursor if with_db else None,
-            'connect_timeout': 5
+            'connect_timeout': 10,
+            'read_timeout': 10,
+            'write_timeout': 10,
+            'autocommit': True
         }
         
-        # Add SSL support for TiDB Cloud
         ssl_ca = os.getenv('DB_SSL_CA')
         if ssl_ca:
             config['ssl'] = {'ca': ssl_ca}
