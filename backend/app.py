@@ -1,4 +1,11 @@
 from flask import Flask, jsonify
+import os
+import sys
+
+# Ensure the backend directory is in the path for Vercel deployments
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
 from flask_cors import CORS
 from config.db import init_db
 from routes.auth_routes import auth_bp
