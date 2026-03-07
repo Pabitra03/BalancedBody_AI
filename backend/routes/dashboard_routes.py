@@ -14,7 +14,7 @@ def get_dashboard():
     if not conn:
         return jsonify({"error": "Database connection failed"}), 500
         
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     try:
         cursor.execute("SELECT p.*, u.name as user_name FROM profiles p JOIN users u ON p.user_id = u.id WHERE p.user_id = %s", (user_id,))
         user = cursor.fetchone()

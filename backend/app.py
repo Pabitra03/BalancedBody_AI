@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from config.db import init_db
 from routes.auth_routes import auth_bp
@@ -22,6 +22,16 @@ CORS(app)
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(profile_bp, url_prefix='/api/user')
 app.register_blueprint(dashboard_bp, url_prefix='/api/dashboard')
+
+# Global Error Handler for Debugging Vercel Errors
+@app.errorhandler(Exception)
+def handle_exception(e):
+    import traceback
+    return jsonify({
+        "error": "Internal Server Error",
+        "message": str(e),
+        "traceback": traceback.format_exc()
+    }), 500
 
 @app.route('/', methods=['GET'])
 def home():

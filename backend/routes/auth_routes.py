@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 import bcrypt
-import mysql.connector
+import pymysql
 from config.db import get_db_connection
 
 auth_bp = Blueprint('auth', __name__)
@@ -27,8 +27,8 @@ def register():
         conn.commit()
         user_id = cursor.lastrowid
         return jsonify({"message": "Registration successful", "user_id": user_id, "name": name}), 201
-    except mysql.connector.Error as err:
-        if err.errno == 1062:
+    except pymysql.Error as err:
+        if err.args[0] == 1062:
             return jsonify({"error": "Email already exists"}), 400
         return jsonify({"error": str(err)}), 500
     finally:
@@ -45,7 +45,7 @@ def login():
     if not conn:
         return jsonify({"error": "Database connection failed"}), 500
         
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     try:
         cursor.execute("SELECT id, name, password FROM users WHERE email = %s", (email,))
         user = cursor.fetchone()

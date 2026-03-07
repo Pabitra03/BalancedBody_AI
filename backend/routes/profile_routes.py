@@ -13,7 +13,7 @@ def get_profile():
     if not conn:
         return jsonify({"error": "Database connection failed"}), 500
         
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     try:
         cursor.execute("SELECT * FROM profiles WHERE user_id = %s", (user_id,))
         profile = cursor.fetchone()

@@ -1,4 +1,4 @@
-import mysql.connector
+import pymysql
 import os
 from dotenv import load_dotenv
 
@@ -10,22 +10,23 @@ def get_db_connection(with_db=True):
             'host': os.getenv('DB_HOST', '127.0.0.1'),
             'user': os.getenv('DB_USER', 'root'),
             'password': os.getenv('DB_PASSWORD', ''),
-            'port': int(os.getenv('DB_PORT', 3306))
+            'port': int(os.getenv('DB_PORT', 3306)),
+            'charset': 'utf8mb4',
+            'cursorclass': pymysql.cursors.DictCursor if with_db else None
         }
         
-        # Add SSL/TLS support (Required for TiDB Cloud)
+        # Add SSL support for TiDB Cloud
         ssl_ca = os.getenv('DB_SSL_CA')
         if ssl_ca:
-            config['ssl_ca'] = ssl_ca
-            config['ssl_verify_cert'] = True
+            config['ssl'] = {'ca': ssl_ca}
 
         if with_db:
             config['database'] = os.getenv('DB_NAME', 'fitness_db')
         
-        connection = mysql.connector.connect(**config)
+        connection = pymysql.connect(**config)
         return connection
     except Exception as e:
-        print(f"Error connecting to MySQL Database: {e}")
+        print(f"Error connecting to Database: {e}")
         return None
 
 def init_db():

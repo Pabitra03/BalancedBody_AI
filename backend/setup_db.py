@@ -3,9 +3,9 @@ import os
 from dotenv import load_dotenv
 
 if __name__ == "__main__":
-    print("Starting database initialization for cloud DB...")
+    print("Starting database initialization for TiDB Cloud...")
     try:
         init_db()
-        print("Done!")
+        print("Successfully initialized tables in the cloud!")
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error during initialization: {e}")
