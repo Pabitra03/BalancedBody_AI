@@ -307,10 +307,9 @@
                     workBadge.className = "text-[10px] font-bold px-2 py-1 rounded bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 border border-orange-200 dark:border-orange-800 uppercase";
                 }
 
-                // Days Planned / Track (Mock logic as requested)
-                // "how many days user have planed it will chaned daily for that much of day"
-                // We'll show "Day X / 30"
-                document.getElementById('days-planned-count').textContent = `Day ${data.days_active} / ${data.days_planned}`;
+                // Days Planned / Track
+                document.getElementById('days-planned-count').textContent = `Day ${data.days_active || 1} / ${data.days_planned || 30}`;
+                document.getElementById('active-days-count').textContent = `${data.days_active || 0} Day Streak`;
                 
                 if (data.diet_completed && data.workout_completed) {
                     showCongrats();
