@@ -149,17 +149,17 @@
             const idx = planVariantIndex % MEAL_POOL.Breakfast.length;
             if (planVariantIndex === 0) {
                 return [
-                    { type: 'Breakfast', icon: 'sun', content: dayPlan.breakfast },
-                    { type: 'Lunch', icon: 'cpu', content: dayPlan.lunch },
-                    { type: 'Dinner', icon: 'moon', content: dayPlan.dinner },
-                    { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[0] }
+                    { type: 'Breakfast', icon: 'sun', content: dayPlan.breakfast, img: MEAL_IMAGES.Breakfast },
+                    { type: 'Lunch', icon: 'cpu', content: dayPlan.lunch, img: MEAL_IMAGES.Lunch },
+                    { type: 'Dinner', icon: 'moon', content: dayPlan.dinner, img: MEAL_IMAGES.Dinner },
+                    { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[0], img: MEAL_IMAGES.Snacks }
                 ];
             }
             return [
-                { type: 'Breakfast', icon: 'sun', content: MEAL_POOL.Breakfast[idx] },
-                { type: 'Lunch', icon: 'cpu', content: MEAL_POOL.Lunch[idx] },
-                { type: 'Dinner', icon: 'moon', content: MEAL_POOL.Dinner[idx] },
-                { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[idx] }
+                { type: 'Breakfast', icon: 'sun', content: MEAL_POOL.Breakfast[idx], img: MEAL_IMAGES.Breakfast },
+                { type: 'Lunch', icon: 'cpu', content: MEAL_POOL.Lunch[idx], img: MEAL_IMAGES.Lunch },
+                { type: 'Dinner', icon: 'moon', content: MEAL_POOL.Dinner[idx], img: MEAL_IMAGES.Dinner },
+                { type: 'Snacks', icon: 'coffee', content: MEAL_POOL.Snacks[idx], img: MEAL_IMAGES.Snacks }
             ];
         }
 
@@ -225,14 +225,12 @@
         function switchDay(tab) {
             // Update tab styles
             document.querySelectorAll('.day-tab').forEach(btn => {
-                btn.classList.replace('bg-primary-500', 'bg-gray-100');
-                btn.classList.remove('text-black');
-                btn.classList.add('text-gray-600', 'dark:bg-gray-800', 'dark:text-gray-300');
+                btn.classList.remove('bg-primary-500', 'text-black');
+                btn.classList.add('bg-gray-100', 'dark:bg-gray-800', 'text-gray-600', 'dark:text-gray-300');
             });
             const activeBtn = document.getElementById(`tab-${tab}`);
-            activeBtn.classList.replace('bg-gray-100', 'bg-primary-500');
-            activeBtn.classList.add('text-black');
-            activeBtn.classList.remove('text-gray-600');
+            activeBtn.classList.remove('bg-gray-100', 'dark:bg-gray-800', 'text-gray-600', 'dark:text-gray-300');
+            activeBtn.classList.add('bg-primary-500', 'text-black');
 
             if (!allData) return;
 
