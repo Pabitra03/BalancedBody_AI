@@ -19,16 +19,39 @@
 </head>
 <body class="bg-background dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200">
 
-    <div id="app-shell" class="w-full h-full">
+    <div id="app-shell" class="w-full h-full pb-24 lg:pb-8">
+        <!-- Congratulation Banner (Hidden by default) -->
+        <div id="congrats-banner" class="hidden fixed top-20 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-md bg-green-500 text-white p-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-bounce">
+            <div class="text-3xl">🏆</div>
+            <div>
+                <h4 class="font-black text-lg">CONGRATULATIONS!</h4>
+                <p class="text-sm opacity-90">You completed today's tasks! <span id="streak-msg">Keep it up!</span></p>
+            </div>
+            <button onclick="this.parentElement.classList.add('hidden')" class="ml-auto p-1 hover:bg-white/20 rounded-lg">
+                <i data-feather="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+
         <div class="mb-8 relative">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Hello, <span id="display-name" class="skeleton text-transparent rounded">User Name</span> 👋</h1>
-                    <p id="today-date-display" class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium"></p>
-                </div>
-                <div class="flex items-center gap-2 bg-primary-100 dark:bg-primary-900/30 px-4 py-2 rounded-full border border-primary-200 dark:border-primary-800">
-                    <span class="text-xl">🔥</span>
-                    <span id="active-days-count" class="text-sm font-bold text-primary-700 dark:text-primary-400">0 Day Streak</span>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-primary-500 rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-primary-500/20">👋</div>
+                        <div>
+                            <h1 class="text-2xl font-black text-gray-900 dark:text-white">Hi, <span id="display-name" class="skeleton text-transparent rounded">User Name</span></h1>
+                            <p id="today-date-display" class="text-xs text-secondary-500 font-bold uppercase tracking-widest mt-0.5"></p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="px-4 py-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-2">
+                             <div class="w-2 h-2 rounded-full bg-primary-500 animate-ping"></div>
+                             <span id="days-planned-count" class="text-xs font-black text-gray-700 dark:text-gray-300 uppercase tracking-tighter">Day 1 / 30</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-primary-500 px-4 py-2 rounded-2xl shadow-lg shadow-primary-500/20">
+                            <span class="text-lg">🔥</span>
+                            <span id="active-days-count" class="text-xs font-black text-black uppercase tracking-tighter">0 Day Streak</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -106,77 +129,108 @@
             <!-- Diet Recommendation -->
             <div class="lg:col-span-2 space-y-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <span class="p-2 bg-primary-100 dark:bg-primary-900/40 text-primary-600 rounded-lg"><i data-feather="coffee" class="w-5 h-5"></i></span>
-                        Today's Diet Recommendation
-                    </h2>
-                    <span id="diet-plan-name" class="text-[10px] sm:text-xs font-bold text-primary-600 bg-primary-50 dark:bg-primary-900/20 px-3 py-1.5 rounded-full border border-primary-200 dark:border-primary-800 self-start sm:self-auto max-w-[150px] sm:max-w-none truncate sm:whitespace-normal text-center">Plan Name</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                            <span class="p-2 bg-primary-100 dark:bg-primary-900/40 text-primary-600 rounded-lg"><i data-feather="coffee" class="w-5 h-5"></i></span>
+                            Today's Diet Recommendation
+                        </h2>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Personalized nutrition plan based on your fitness goals.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span id="diet-status-badge" class="hidden text-[10px] font-bold px-3 py-1 rounded bg-green-500 text-white border-0 shadow-sm animate-pulse">COMPLETED</span>
+                        <span id="diet-plan-name" class="text-[10px] sm:text-xs font-black text-primary-500 bg-primary-500/10 px-3 py-1.5 rounded-full border border-primary-500/20">Plan Name</span>
+                    </div>
                 </div>
 
                 <!-- Main Featured Meal -->
-                <div class="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-md">
-                    <div class="aspect-video sm:h-64 h-48 w-full bg-gray-100 dark:bg-gray-900 relative">
+                <div class="relative bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-2xl group ring-1 ring-black/5 dark:ring-white/5">
+                    <div class="h-[300px] sm:h-[400px] w-full bg-gray-100 dark:bg-gray-900 relative">
                         <img id="featured-meal-img" src="" alt="Featured Meal" 
-                             class="w-full h-full object-cover opacity-0 transition-opacity duration-500 z-10 relative" 
+                             class="w-full h-full object-cover opacity-0 transition-all duration-1000 z-10 relative group-hover:scale-105 transition-transform" 
                              onload="this.classList.remove('opacity-0'); document.getElementById('img-placeholder').classList.add('hidden')"
-                             onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'; this.classList.remove('opacity-0'); document.getElementById('img-placeholder').classList.add('hidden')">
+                             onerror="this.src='/assets/img/veg_main.png'; this.classList.remove('opacity-0');">
                         <div id="img-placeholder" class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-600">
-                             <i data-feather="image" class="w-8 h-8"></i>
+                             <i data-feather="image" class="w-16 h-16 animate-pulse"></i>
                         </div>
+                        <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-20"></div>
                     </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
-                        <span class="text-xs font-bold text-primary-400 uppercase tracking-wider mb-1">Top Recommendation</span>
-                        <h3 id="featured-meal-title" class="text-2xl font-bold text-white mb-2"></h3>
-                        <p id="featured-meal-desc" class="text-sm text-gray-300 line-clamp-2"></p>
+                    <div class="absolute inset-0 z-30 flex flex-col justify-end p-8">
+                        <div class="flex justify-between items-end gap-6">
+                            <div class="max-w-[70%]">
+                                <span class="bg-primary-500 text-black text-[10px] font-black uppercase px-2 py-1 rounded mb-3 inline-block tracking-tighter">Chef's Choice</span>
+                                <h3 id="featured-meal-title" class="text-3xl font-black text-white mb-2 leading-tight drop-shadow-lg"></h3>
+                                <p id="featured-meal-desc" class="text-sm text-gray-200 line-clamp-2 drop-shadow-md opacity-90"></p>
+                            </div>
+                            <button id="mark-diet-btn" onclick="markTaskComplete('diet')" class="bg-white hover:bg-primary-500 text-black font-black text-sm uppercase px-6 py-3 rounded-2xl transition-all hover-scale shadow-xl whitespace-nowrap">
+                                Mark as Eaten
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Meal Breakdown Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Breakfast -->
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group hover:border-blue-500/50 transition-colors">
+                        <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
                             <i data-feather="sun" class="w-12 h-12 text-blue-500"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Sunrise Fuel</span>
-                        <h4 id="meal-breakfast" class="font-bold text-gray-900 dark:text-white text-sm mb-1"></h4>
-                        <p class="text-[10px] text-gray-500 line-clamp-2">High energy intake to fuel your morning activity.</p>
+                        <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest block mb-1">Sunrise Fuel</span>
+                        <h4 id="meal-breakfast" class="font-black text-gray-900 dark:text-white text-lg sm:text-base mb-1">Loading...</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">High energy morning fuel.</p>
                     </div>
                     <!-- Lunch -->
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group hover:border-orange-500/50 transition-colors">
+                        <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
                             <i data-feather="cloud" class="w-12 h-12 text-orange-500"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-orange-500 uppercase tracking-widest block mb-1">Peak Performance</span>
-                        <h4 id="meal-lunch" class="font-bold text-gray-900 dark:text-white text-sm mb-1"></h4>
-                        <p class="text-[10px] text-gray-500 line-clamp-2">Balanced macros for sustained cognitive and physical focus.</p>
+                        <span class="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Peak Performance</span>
+                        <h4 id="meal-lunch" class="font-black text-gray-900 dark:text-white text-lg sm:text-base mb-1">Loading...</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Stable afternoon energy.</p>
                     </div>
                     <!-- Dinner -->
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden group hover:border-purple-500/50 transition-colors">
+                        <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
                             <i data-feather="moon" class="w-12 h-12 text-purple-500"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-purple-500 uppercase tracking-widest block mb-1">Night Recovery</span>
-                        <h4 id="meal-dinner" class="font-bold text-gray-900 dark:text-white text-sm mb-1"></h4>
-                        <p class="text-[10px] text-gray-500 line-clamp-2">Low carb and lean protein for optimal nightly synthesis.</p>
+                        <span class="text-[10px] font-black text-purple-500 uppercase tracking-widest block mb-1">Night Recovery</span>
+                        <h4 id="meal-dinner" class="font-black text-gray-900 dark:text-white text-lg sm:text-base mb-1">Loading...</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Restorative evening meal.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Side Workout Suggestion -->
             <div class="space-y-6">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-                    <span class="p-2 bg-orange-100 dark:bg-orange-900/40 text-orange-600 rounded-lg"><i data-feather="layers" class="w-5 h-5"></i></span>
-                    Daily Grind
-                </h2>
-                <div class="bg-gradient-to-br from-orange-500 to-red-600 p-6 rounded-2xl text-white shadow-lg relative overflow-hidden">
-                    <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
-                    <span class="text-xs font-bold text-white/80 uppercase tracking-widest block mb-2">Today's Protocol</span>
-                    <h3 id="workout-name" class="text-2xl font-bold mb-2"></h3>
-                    <p id="workout-routine" class="text-orange-100 text-sm mb-6 leading-relaxed"></p>
-                    <a href="workout.html" class="inline-flex items-center gap-2 bg-white text-orange-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-100 transition-colors">
-                        Start Workout <i data-feather="arrow-right" class="w-4 h-4"></i>
-                    </a>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <span class="p-2 bg-orange-100 dark:bg-orange-900/40 text-orange-600 rounded-lg"><i data-feather="target" class="w-5 h-5"></i></span>
+                        Workout Focus
+                    </h2>
+                    <span id="workout-status-badge" class="hidden text-[10px] font-bold px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">COMPLETE</span>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-md relative overflow-hidden h-full">
+                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-orange-500/5 rounded-full blur-3xl"></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 id="workout-name" class="text-2xl font-black text-gray-900 dark:text-white mb-1"></h3>
+                                <p id="workout-desc" class="text-sm text-gray-500 dark:text-gray-400"></p>
+                            </div>
+                            <div class="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl text-orange-500">
+                                <i data-feather="zap" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-grow">
+                            <h4 id="today-workout-item" class="text-3xl font-black text-primary-500 mb-6 drop-shadow-sm"></h4>
+                        </div>
+                        
+                        <button id="mark-workout-btn" onclick="markTaskComplete('workout')" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl shadow-lg shadow-orange-500/20 transition-all hover-scale flex items-center justify-center gap-2">
+                            <span>MARK WORKOUT COMPLETE</span>
+                            <i data-feather="check-circle" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -184,87 +238,109 @@
 
     <script src="js/app.js?v=2"></script>
     <script>
+        const userId = getUserId();
+        
+        async function markTaskComplete(taskType) {
+            try {
+                const res = await fetch(`${API_BASE_URL}/progress/mark-complete`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, task_type: taskType })
+                });
+                const data = await res.json();
+                if (data.fully_completed) {
+                    showCongrats();
+                }
+                fetchProgressStatus();
+            } catch (e) { console.error("Error marking complete:", e); }
+        }
+
+        async function fetchProgressStatus() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/progress/status/${userId}`);
+                const data = await res.json();
+                
+                // Update badges and buttons
+                const dietBadge = document.getElementById('diet-status-badge');
+                const dietBtn = document.getElementById('mark-diet-btn');
+                if (data.diet_completed) {
+                    dietBadge.classList.remove('hidden');
+                    dietBtn.textContent = 'DONE ✓';
+                    dietBtn.disabled = true;
+                    dietBtn.className = "bg-green-500 text-white font-black text-xs uppercase px-4 py-2 rounded-lg opacity-80 cursor-default";
+                }
+
+                const workBadge = document.getElementById('workout-status-badge');
+                const workBtn = document.getElementById('mark-workout-btn');
+                if (data.workout_completed) {
+                    workBadge.classList.remove('hidden');
+                    workBtn.innerHTML = 'WORKOUT COMPLETED ✓';
+                    workBtn.disabled = true;
+                    workBtn.className = "w-full bg-green-500 text-white font-black py-4 rounded-xl flex items-center justify-center gap-2 cursor-default";
+                }
+
+                // Days Planned / Track (Mock logic as requested)
+                // "how many days user have planed it will chaned daily for that much of day"
+                // We'll show "Day X / 30"
+                document.getElementById('days-planned-count').textContent = `Day ${data.days_active} / ${data.days_planned}`;
+                
+                if (data.diet_completed && data.workout_completed) {
+                    showCongrats();
+                }
+            } catch (e) { console.error("Error fetching status:", e); }
+        }
+
+        function showCongrats() {
+            const banner = document.getElementById('congrats-banner');
+            if (banner.classList.contains('hidden')) {
+                banner.classList.remove('hidden');
+                // Auto hide after 5 seconds
+                setTimeout(() => banner.classList.add('hidden'), 5000);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
-            const userId = getUserId();
             if (!userId) { window.location.href = 'auth.html'; return; }
 
             try {
                 const res = await fetch(`${API_BASE_URL}/dashboard?user_id=${userId}`);
-                if (res.status === 404) {
-                    const data = await res.json();
-                    if (data.error === "User not found") {
-                        alert("Session expired or user deleted. Please register again.");
-                        logout();
-                        return;
-                    }
-                }
                 if (!res.ok) throw new Error('Need onboarding');
                 const data = await res.json();
                 
-                const pName = document.getElementById('display-name');
-                pName.classList.remove('skeleton', 'text-transparent');
-                pName.textContent = data.name;
-
+                document.getElementById('display-name').textContent = data.name;
+                document.getElementById('display-name').classList.remove('skeleton', 'text-transparent');
                 document.getElementById('today-date-display').textContent = data.today_date;
                 document.getElementById('active-days-count').textContent = `${data.active_days} Day Streak`;
 
-                const pBmi = document.getElementById('metric-bmi');
-                pBmi.classList.remove('skeleton', 'w-20', 'h-8');
-                pBmi.textContent = data.metrics.bmi;
-                
-                const pBmiLabel = document.getElementById('metric-bmi-label');
-                pBmiLabel.classList.remove('skeleton', 'w-24', 'h-4');
-                pBmiLabel.textContent = (data.metrics.bmi > 25) ? 'Overweight' : (data.metrics.bmi < 18.5) ? 'Underweight' : 'Healthy';
-                pBmiLabel.className = (data.metrics.bmi > 25 || data.metrics.bmi < 18.5) ? 'text-xs font-medium text-orange-500' : 'text-xs font-medium text-primary-500';
-
-                const pCal = document.getElementById('metric-cal');
-                pCal.classList.remove('skeleton', 'w-20', 'h-8');
-                pCal.textContent = data.metrics.tdee;
+                document.getElementById('metric-bmi').textContent = data.metrics.bmi;
+                document.getElementById('metric-bmi-label').textContent = (data.metrics.bmi > 25) ? 'Overweight' : 'Healthy';
+                document.getElementById('metric-cal').textContent = data.metrics.tdee;
                 document.getElementById('cal-unit').classList.remove('hidden');
 
-                const pGoal = document.getElementById('metric-goal');
-                pGoal.classList.remove('skeleton', 'w-24', 'h-8');
-                const goalMap = { 'loss': 'Weight Loss', 'gain': 'Build Muscle', 'maintain': 'Maintenance' };
-                let dietType = 'non_vegetarian';
-                try {
-                    const profReq = await fetch(`${API_BASE_URL}/user/profile?user_id=${userId}`);
-                    if (profReq.ok) {
-                        const prof = await profReq.json();
-                        pGoal.textContent = goalMap[prof.goal] || prof.goal;
-                        dietType = prof.diet_type || 'non_vegetarian';
-                    }
-                } catch(e) { pGoal.textContent = "Optimization"; }
-
-                // Populate Diet Plan
-                document.getElementById('diet-plan-name').textContent = data.diet.name;
-                const today = new Date().toLocaleDateString('en-US', { weekday: 'lowercase' });
-                // We use 'monday' or 'tuesday' currently in plans.py, let's fall back to monday if anything else
-                const dayKey = (today === 'tuesday') ? 'tuesday' : 'monday';
-                const meals = data.diet[dayKey];
+                // Differentiate Today and Tomorrow
+                const weekday = new Date().toLocaleDateString('en-US', { weekday: 'lowercase' });
+                const dietData = data.diet[weekday] || data.diet.monday;
                 
-                document.getElementById('featured-meal-title').textContent = meals.lunch.item;
-                document.getElementById('featured-meal-desc').textContent = meals.lunch.details;
+                document.getElementById('diet-plan-name').textContent = data.diet.name;
+                document.getElementById('featured-meal-title').textContent = dietData.lunch.item;
+                document.getElementById('featured-meal-desc').textContent = dietData.lunch.details;
                 
                 const mealImg = document.getElementById('featured-meal-img');
-                const lunchImg = (meals.lunch && meals.lunch.image) ? meals.lunch.image : '/assets/img/veg_main.png';
-                // Add cache busting
-                const finalImgPath = lunchImg.startsWith('/') ? lunchImg : '/' + lunchImg;
-                mealImg.src = finalImgPath + '?v=' + new Date().getTime();
+                mealImg.src = dietData.lunch.image + '?v=' + new Date().getTime();
                 
-                document.getElementById('meal-breakfast').textContent = meals.breakfast.item;
-                document.getElementById('meal-lunch').textContent = meals.lunch.item;
-                document.getElementById('meal-dinner').textContent = meals.dinner.item;
+                document.getElementById('meal-breakfast').textContent = dietData.breakfast.item;
+                document.getElementById('meal-lunch').textContent = dietData.lunch.item;
+                document.getElementById('meal-dinner').textContent = dietData.dinner.item;
 
-                // Populate Workout
                 document.getElementById('workout-name').textContent = data.workout.name;
-                document.getElementById('workout-routine').textContent = data.workout[dayKey] || "Light Activity";
+                document.getElementById('workout-desc').textContent = data.workout.desc;
+                document.getElementById('today-workout-item').textContent = data.workout[weekday] || "Rest Day";
 
                 feather.replace();
+                fetchProgressStatus();
 
             } catch (err) {
-                if (err.message === 'Need onboarding' || err.message.includes('Profile not configured')) {
-                    window.location.href = 'profile.html';
-                }
+                window.location.href = 'profile.html';
             }
         });
     </script>

@@ -10,6 +10,7 @@ from flask_cors import CORS
 from config.db import init_db
 from routes.auth_routes import auth_bp
 from routes.profile_routes import profile_bp
+from routes.progress_routes import progress_routes
 from routes.dashboard_routes import dashboard_bp
 import os
 from dotenv import load_dotenv
@@ -29,7 +30,9 @@ CORS(app)
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(profile_bp, url_prefix='/api/user')
 app.register_blueprint(dashboard_bp, url_prefix='/api/dashboard')
+app.register_blueprint(progress_routes, url_prefix='/api/progress')
 
+init_db()
 # Global Error Handler for Debugging Vercel Errors
 @app.errorhandler(Exception)
 def handle_exception(e):
