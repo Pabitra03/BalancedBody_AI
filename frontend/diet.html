@@ -325,7 +325,10 @@
                 feather.replace();
 
             } catch (err) {
-                window.location.href = 'profile.html';
+                console.error("Diet Init Error:", err);
+                if (err.message === 'Need profile') {
+                    window.location.href = 'profile.html';
+                }
             }
         });
     </script>

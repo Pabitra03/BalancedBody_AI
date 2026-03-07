@@ -317,8 +317,9 @@
                 document.getElementById('metric-cal').textContent = data.metrics.tdee;
                 document.getElementById('cal-unit').classList.remove('hidden');
 
-                // Differentiate Today and Tomorrow
-                const weekday = new Date().toLocaleDateString('en-US', { weekday: 'lowercase' });
+                // Correctly get lowercase weekday (e.g., 'monday')
+                const weekday = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+                
                 const dietData = data.diet[weekday] || data.diet.monday;
                 
                 document.getElementById('diet-plan-name').textContent = data.diet.name;
@@ -340,7 +341,12 @@
                 fetchProgressStatus();
 
             } catch (err) {
-                window.location.href = 'profile.html';
+                console.error("Dashboard Init Error:", err);
+                if (err.message === 'Need onboarding') {
+                    window.location.href = 'profile.html';
+                }
+                // If it's a JS error (like the one we just fixed), we stay on the page 
+                // but log the error so we can see it in console.
             }
         });
     </script>

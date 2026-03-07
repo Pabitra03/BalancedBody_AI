@@ -264,7 +264,10 @@
                 feather.replace();
 
             } catch (err) {
-                window.location.href = 'profile.html';
+                console.error("Workout Init Error:", err);
+                if (err.message === 'Need profile') {
+                    window.location.href = 'profile.html';
+                }
             }
         });
     </script>
