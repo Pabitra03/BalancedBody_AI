@@ -6,13 +6,13 @@ import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
     sys.path.append(current_dir)
+
 from flask_cors import CORS
 from config.db import init_db
 from routes.auth_routes import auth_bp
 from routes.profile_routes import profile_bp
 from routes.progress_routes import progress_routes
 from routes.dashboard_routes import dashboard_bp
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,19 +20,15 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# Initialize Database (Commented out for Vercel/Production)
-# try:
-#     init_db()
-# except Exception as e:
-#     print(f"[WARNING] Could not init DB: {e}")
-
 # Register Blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(profile_bp, url_prefix='/api/user')
 app.register_blueprint(dashboard_bp, url_prefix='/api/dashboard')
 app.register_blueprint(progress_routes, url_prefix='/api/progress')
 
-init_db()
+# Only uncomment to manually init DB locally if needed
+# init_db()
+
 # Global Error Handler for Debugging Vercel Errors
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -48,6 +44,5 @@ def home():
     return "BalancedBody AI Backend is running!"
 
 if __name__ == '__main__':
-    # Port 5001 used because macOS reserves 5000 for AirPlay Receiver
     port = int(os.environ.get('PORT', 5001))
     app.run(host='0.0.0.0', port=port, debug=True)

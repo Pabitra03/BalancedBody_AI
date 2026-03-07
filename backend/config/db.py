@@ -88,6 +88,20 @@ def init_db():
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )
     """)
+
+    # Create User Progress Table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS user_progress (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        entry_date DATE NOT NULL,
+        diet_completed BOOLEAN DEFAULT FALSE,
+        workout_completed BOOLEAN DEFAULT FALSE,
+        streak_count INT DEFAULT 0,
+        UNIQUE KEY user_date (user_id, entry_date),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+    """)
     
     conn.commit()
     cursor.close()
