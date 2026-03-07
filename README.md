@@ -1,6 +1,5 @@
-# Fitness AI
-
-Fitness AI is an intelligent biological optimization system that analyzes your precise biological metrics — Age, Gender, Weight, Height, and Activity Level — to build personalized diet and fitness protocols.
+# BalancedBody AI — Diet & Fitness System
+AI is an intelligent biological optimization system that analyzes your precise biological metrics — Age, Gender, Weight, Height, and Activity Level — to build personalized diet and fitness protocols.
 
 ## 🚀 Features
 
