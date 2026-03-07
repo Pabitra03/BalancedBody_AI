@@ -12,11 +12,11 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# Initialize Database (graceful - won't crash if MySQL not running)
-try:
-    init_db()
-except Exception as e:
-    print(f"[WARNING] Could not init DB: {e}. Ensure MySQL is running.")
+# Initialize Database (Commented out for Vercel/Production)
+# try:
+#     init_db()
+# except Exception as e:
+#     print(f"[WARNING] Could not init DB: {e}")
 
 # Register Blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
