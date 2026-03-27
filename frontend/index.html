@@ -30,10 +30,14 @@
 
         <!-- Background Image -->
         <div class="absolute inset-0 z-0 bg-black overflow-hidden">
+            <!-- Desktop Image -->
             <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80"
-                 alt="Fitness Motivation" class="w-full h-full object-cover object-center opacity-50 sm:opacity-40 transition-opacity duration-1000">
-            <!-- Professional gradient overlay: transparent on right (laptop), darker on left/mobile for text -->
-            <div class="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-r from-black via-black/90 sm:via-black/50 to-black/70 sm:to-transparent"></div>
+                 alt="Fitness Motivation" class="hidden sm:block w-full h-full object-cover object-center opacity-40 transition-opacity duration-1000">
+            <!-- Mobile Image (9:16) -->
+            <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&h=1600&q=80"
+                 alt="Fitness Motivation Mobile" class="block sm:hidden w-full h-full object-cover object-center opacity-40 transition-opacity duration-1000">
+            <!-- Professional gradient overlay: darker on mobile for better text contrast -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent sm:bg-gradient-to-r sm:from-black sm:via-black/50 sm:to-transparent"></div>
         </div>
 
         <!-- Navigation -->
@@ -68,40 +72,40 @@
         </nav>
 
         <!-- Hero Content -->
-        <div class="relative z-10 flex-grow flex items-start pt-16 sm:pt-28 pb-12 sm:pb-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div class="max-w-2xl text-left">
-                    <span class="inline-block bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-6">AI Powered Health Platform</span>
-                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight text-white mb-5 leading-tight">
-                        BalancedBody AI <span class="text-primary-500 text-3xl sm:text-5xl block sm:inline">Diet & Fitness</span>
+        <div class="relative z-10 flex-grow flex items-center sm:items-start pt-10 sm:pt-28 pb-12 sm:pb-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center sm:items-start">
+                <div class="max-w-2xl text-center sm:text-left flex flex-col items-center sm:items-start w-full">
+                    <span class="inline-block bg-white/10 border border-white/20 text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest px-3 py-1.5 sm:py-1 rounded-full mb-6">AI Powered Health Platform</span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight text-white mb-4 sm:mb-5 leading-[1.1] sm:leading-tight">
+                        BalancedBody AI <span class="text-primary-500 text-3xl sm:text-5xl block sm:inline mt-1 sm:mt-0">Diet & Fitness</span>
                     </h1>
-                    <p class="text-sm sm:text-base lg:text-lg text-gray-300 mb-8 font-medium leading-relaxed max-w-xl">
+                    <p class="text-sm sm:text-base lg:text-lg text-gray-300 mb-8 sm:mb-8 font-medium leading-relaxed max-w-xl px-2 sm:px-0">
                         Get personalized meal and workout plans using AI. Built for your exact biology.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="auth.html?tab=register" class="inline-block bg-primary-500 hover:bg-primary-600 text-black px-8 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all hover-scale text-center">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+                        <a href="auth.html?tab=register" class="inline-flex justify-center items-center bg-primary-500 hover:bg-primary-600 text-black px-8 py-3.5 sm:py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all hover-scale w-full sm:w-auto">
                             Get Started Free
                         </a>
-                        <a href="auth.html" class="inline-block border-2 border-white/40 text-white hover:border-primary-500 hover:text-primary-500 px-8 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all text-center">
+                        <a href="auth.html" class="inline-flex justify-center items-center border-[1.5px] border-white/30 text-white hover:border-primary-500 hover:text-primary-500 bg-white/5 backdrop-blur-sm sm:bg-transparent px-8 py-3.5 sm:py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all w-full sm:w-auto">
                             Login
                         </a>
                     </div>
 
                     <!-- Stats Bar -->
-                    <div class="mt-8 sm:mt-12 flex flex-wrap gap-6 sm:gap-10">
-                        <div>
-                            <p class="text-2xl font-black text-white">BMI</p>
-                            <p class="text-xs text-gray-400 uppercase tracking-wider">Auto Calculated</p>
+                    <div class="mt-10 sm:mt-12 w-full flex flex-row items-center justify-between sm:justify-start gap-2 sm:gap-10 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:bg-transparent sm:backdrop-blur-none sm:border-0 sm:rounded-none sm:p-0 divide-x divide-white/10 sm:divide-x-0">
+                        <div class="flex-1 sm:flex-none text-center sm:text-left px-1 sm:px-0">
+                            <p class="text-xl sm:text-2xl font-black text-white">BMI</p>
+                            <p class="text-[9px] sm:text-xs text-gray-400 uppercase tracking-wider mt-1 sm:mt-0">Auto<br class="block sm:hidden"> Calculated</p>
                         </div>
-                        <div class="w-px bg-white/20 hidden sm:block"></div>
-                        <div>
-                            <p class="text-2xl font-black text-white">7-Day</p>
-                            <p class="text-xs text-gray-400 uppercase tracking-wider">Meal Plans</p>
+                        <div class="w-px h-10 bg-white/20 hidden sm:block"></div>
+                        <div class="flex-1 sm:flex-none text-center sm:text-left px-1 sm:px-0">
+                            <p class="text-xl sm:text-2xl font-black text-white">7-Day</p>
+                            <p class="text-[9px] sm:text-xs text-gray-400 uppercase tracking-wider mt-1 sm:mt-0">Meal<br class="block sm:hidden"> Plans</p>
                         </div>
-                        <div class="w-px bg-white/20 hidden sm:block"></div>
-                        <div>
-                            <p class="text-2xl font-black text-white">AI</p>
-                            <p class="text-xs text-gray-400 uppercase tracking-wider">Health Insights</p>
+                        <div class="w-px h-10 bg-white/20 hidden sm:block"></div>
+                        <div class="flex-1 sm:flex-none text-center sm:text-left px-1 sm:px-0">
+                            <p class="text-xl sm:text-2xl font-black text-white">AI</p>
+                            <p class="text-[9px] sm:text-xs text-gray-400 uppercase tracking-wider mt-1 sm:mt-0">Health<br class="block sm:hidden"> Insights</p>
                         </div>
                     </div>
                 </div>
